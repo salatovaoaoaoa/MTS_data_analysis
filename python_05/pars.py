@@ -7,14 +7,14 @@ class MoviesSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        # выделяем часть страницы с нужным контентом
+        # Выделяем часть страницы с нужным контентом
         films = response.css("#mw-pages")
 
         # Находим ссылки на статьи о фильмах
         for link in films.css(".mw-category a::attr(href)").getall():
             yield response.follow(link, self.parse_movie)
 
-        # Переходим на следующую страницу если она есть
+        # Переходим на следующую страницу, если она есть
         next_page = films.css("a:contains('Следующая страница')::attr(href)").get()
         if next_page:
             yield response.follow(next_page, self.parse)
@@ -24,10 +24,14 @@ class MoviesSpider(scrapy.Spider):
 
         title = infobox.css(".infobox-above ::text").get()
 
-        genre = infobox.css('span[data-wikidata-property-id*=P136] ::text').get()
-        director = infobox.css('span[data-wikidata-property-id*=P57] ::text').get()
-        country = infobox.css('span[data-wikidata-property-id*=P495] ::text').get()
-        year = infobox.css('.dtstart ::text').get()
+        # Ищем значения по заголовкам в первой колонке
+        def get_value(label):
+            return infobox.xpath(f".//tr[th[contains(text(), '{label}')]]/td//text()").getAll().join(';').strip()
+
+        genre = get_value("Жанр")
+        director = get_value("Режиссёр")
+        country = get_value("Страна")
+        year = get_value("Год")
 
         res = {
             'Название': title,
