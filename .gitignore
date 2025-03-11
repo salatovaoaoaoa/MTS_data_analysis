@@ -3,6 +3,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+#Datas 
+EDA/chocolate_sales_data/
+EDA/lesson_1.ipynb
+EDA/lesson_2.ipynb
+EDA/notebook_seminar.ipynb
+EDA/sem_mts_eda_2.ipynb
+
 # C extensions
 *.so
 
