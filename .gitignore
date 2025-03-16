@@ -9,6 +9,8 @@ EDA/lesson_1.ipynb
 EDA/lesson_2.ipynb
 EDA/notebook_seminar.ipynb
 EDA/sem_mts_eda_2.ipynb
+stats_final/telecom_churn_data/
+stats_final/adidas_sales_data/
 
 # C extensions
 *.so
